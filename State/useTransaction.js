@@ -3,7 +3,7 @@ import {contractAtom, transcationAtom} from '../State/atom'
 import {useEffect, useRef, useState} from 'react'
 import {useMoralis} from 'react-moralis'
 import {ethers} from 'ethers'
-import abi from '../abi.json'
+import abi from '../pages/abi.json'
 
 export default function useTransaction() {
   const [tx, setTx] = useAtom(transcationAtom)

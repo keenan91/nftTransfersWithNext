@@ -1,6 +1,6 @@
 import {useRef} from 'react'
 import {useAtom} from 'jotai'
-import {contractAtom} from '../State/atom'
+import {contractAtom} from '../../State/atom'
 import {Flex, Select} from '@chakra-ui/react'
 export default function HandleSelect() {
   const [contract, setContract] = useAtom(contractAtom)

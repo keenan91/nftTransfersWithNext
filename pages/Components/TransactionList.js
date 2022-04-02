@@ -1,5 +1,5 @@
 import {SimpleGrid} from '@chakra-ui/react'
-import useTransaction from '../State/useTransaction'
+import useTransaction from '../../State/useTransaction'
 import Transaction from './Transaction'
 export default function TransactionList() {
   const transactions = useTransaction()

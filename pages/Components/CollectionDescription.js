@@ -1,6 +1,6 @@
 import {useEffect, useState, useRef} from 'react'
 import {useAtom} from 'jotai'
-import {contractAtom, collectionJSONAtom} from '../State/atom'
+import {contractAtom, collectionJSONAtom} from '../../State/atom'
 import {
   Box,
   Grid,
