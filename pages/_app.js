@@ -1,7 +1,7 @@
 import '../styles/globals.css'
 import {ChakraProvider} from '@chakra-ui/react'
 import {MoralisProvider} from 'react-moralis'
-import theme from './theme'
+import theme from '../theme'
 function MyApp({Component, pageProps}) {
   return (
     <MoralisProvider
