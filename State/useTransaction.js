@@ -1,5 +1,5 @@
 import {useAtom} from 'jotai'
-import {contractAtom, transcationAtom} from '../State/atom'
+import {contractAtom, transcationAtom, isLoadingAtom} from '../State/atom'
 import {useEffect, useRef, useState} from 'react'
 import {useMoralis} from 'react-moralis'
 import {ethers} from 'ethers'
@@ -8,6 +8,7 @@ import abi from '../pages/abi.json'
 export default function useTransaction() {
   const [tx, setTx] = useAtom(transcationAtom)
   const [contract] = useAtom(contractAtom)
+  const [, setIsLoading] = useAtom(isLoadingAtom)
   const {Moralis} = useMoralis()
   const Provider = new ethers.providers.JsonRpcProvider(
     'https://rpc.ankr.com/eth',
@@ -17,6 +18,25 @@ export default function useTransaction() {
   let appId = 'Q4SFp1T2sY07hT7TEF9kVtNFcWsdDd6etdYGHCxS'
   let serverUrl = 'https://gvrhkyktpyjl.usemoralis.com:2053/server'
   Moralis.start({appId, serverUrl})
+
+  const handleLiveTransferUpdate = async (from, to, tokenId) => {
+    const utcStr = new Date().toISOString().replace('T', ' ').replace('Z', '')
+    let localTime = new Date(utcStr)
+    let localTimeString = localTime.toLocaleString()
+    let truncateFrom = from.slice(0, 6) + '...' + from.slice(-4)
+    let truncateTo = to.slice(0, 6) + '...' + to.slice(-4)
+    setTx((prev) => [
+      {
+        from: truncateFrom,
+        to: truncateTo,
+        tokenId: tokenId.toString(),
+        time: localTimeString,
+        fromLink: `https://etherscan.io/address/${from}`,
+        toLink: `https://etherscan.io/address/${to}`,
+      },
+      ...prev,
+    ])
+  }
 
   useEffect(() => {
     const fetchNFTS = async () => {
@@ -51,11 +71,19 @@ export default function useTransaction() {
           fromLink: `https://etherscan.io/address/${transfer.from_address}`,
           toLink: `https://etherscan.io/address/${transfer.to_address}`,
           hash: transfer.transaction_hash,
+          contract: contract,
         }
       })
-      setTx([...nftTransfersArray])
+
+      setTx((prev) => [...nftTransfersArray, ...prev])
+      setIsLoading(false)
     }
     fetchNFTS()
+    Contract.on('Transfer', handleLiveTransferUpdate)
+    return () => {
+      Contract.removeAllListeners('Transfer')
+      setTx([])
+    }
   }, [contract])
 
   return tx

@@ -1,14 +1,19 @@
 import {useRef} from 'react'
 import {useAtom} from 'jotai'
-import {contractAtom} from '../../State/atom'
-import {Flex, Select} from '@chakra-ui/react'
+import {contractAtom, isLoadingAtom} from '../../State/atom'
+import {Flex, Select, Input, Button} from '@chakra-ui/react'
+import {ArrowForwardIcon} from '@chakra-ui/icons'
 export default function HandleSelect() {
   const [contract, setContract] = useAtom(contractAtom)
+  const [loading, setIsLoading] = useAtom(isLoadingAtom)
   const selectRef = useRef()
+  const inputRef = useRef()
 
-  const handleSelect = async (event) => {
+  const handleSelect = (event) => {
+    setIsLoading(true)
     setContract(event.target.value)
   }
+
   return (
     <Flex justify="center">
       <Select
@@ -16,6 +21,7 @@ export default function HandleSelect() {
         ref={selectRef}
         onChange={handleSelect}
         textAlign="center"
+        placeholder="Select Contract"
       >
         <option value="0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D">
           Bored Ape Yacht Club

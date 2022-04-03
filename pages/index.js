@@ -3,6 +3,7 @@ import {Box, Flex, Heading} from '@chakra-ui/react'
 import CollectionDescription from './Components/CollectionDescription'
 import HandleSelect from './Components/HandleSelect'
 import TransactionList from './Components/TransactionList'
+import ContractInput from './Components/ContractInput'
 
 export default function Home() {
   return (
@@ -17,9 +18,12 @@ export default function Home() {
           <Heading textAlign="center" mb="1rem">
             Recent Transfer History
           </Heading>
-          <HandleSelect />
+          <Flex gap="1rem">
+            <HandleSelect />
+            <ContractInput />
+          </Flex>
         </Flex>
-
+        <CollectionDescription />
         <TransactionList />
       </Box>
     </>

@@ -1,21 +1,7 @@
-import {useEffect, useState, useRef} from 'react'
+import {useEffect} from 'react'
 import {useAtom} from 'jotai'
 import {contractAtom, collectionJSONAtom} from '../../State/atom'
-import {
-  Box,
-  Grid,
-  SimpleGrid,
-  Flex,
-  Button,
-  Container,
-  Heading,
-  Text,
-  Badge,
-  Link,
-  Select,
-  Image,
-  useColorMode,
-} from '@chakra-ui/react'
+import {Heading} from '@chakra-ui/react'
 import {useMoralis} from 'react-moralis'
 
 export default function CollectionDescription() {
@@ -36,7 +22,7 @@ export default function CollectionDescription() {
   }, [contract])
   return (
     <>
-      <Heading as="h1" size="lg" align="center">
+      <Heading as="h1" size="lg" align="center" mt="1rem">
         {collectionJSON?.name} - {collectionJSON?.symbol}
       </Heading>
     </>

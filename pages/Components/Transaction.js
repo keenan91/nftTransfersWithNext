@@ -1,7 +1,11 @@
-import {Flex, Heading, Text, Badge, Link, Image} from '@chakra-ui/react'
+import NextLink from 'next/link'
+import {Flex, Heading, Text, Badge, Link, Image, Button} from '@chakra-ui/react'
 import {ExternalLinkIcon, ArrowForwardIcon} from '@chakra-ui/icons'
+import {useAtom} from 'jotai'
+import {contractAtom} from '../../State/atom'
 
 export default function Transaction({transaction}) {
+  const [contract] = useAtom(contractAtom)
   return (
     <Flex
       direction="column"
@@ -36,6 +40,11 @@ export default function Transaction({transaction}) {
       ) : (
         <Text>Time: Not Available</Text>
       )}
+      <NextLink href={`tokenId/${transaction?.tokenId}&${contract}`}>
+        <a>
+          <Button mt=".5rem">View</Button>
+        </a>
+      </NextLink>
     </Flex>
   )
 }
