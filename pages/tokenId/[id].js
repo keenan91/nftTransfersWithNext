@@ -65,7 +65,7 @@ const TokenId = ({rsp}) => {
             </Button>
           </a>
         </NextLink>
-        <Image src={image_url} mt="2rem" />
+        <Image alt="A picture of the NFT" src={image_url} mt="2rem" />
         <Heading mt="1rem">TokenId - {token_id}</Heading>
       </Flex>
     </Box>

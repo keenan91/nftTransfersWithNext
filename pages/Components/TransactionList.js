@@ -11,10 +11,12 @@ import {
 import {motion} from 'framer-motion'
 import useTransaction from '../../State/useTransaction'
 import Transaction from './Transaction'
+import {v4 as uuidv4} from 'uuid'
 export default function TransactionList() {
   const ary = Array.from(Array(40).keys())
   const transactions = useTransaction()
   const [isLoading] = useAtom(isLoadingAtom)
+
   const MotionBox = motion(Box)
   return (
     <>
@@ -32,13 +34,14 @@ export default function TransactionList() {
                 alignItems="center"
                 maxW="512px"
                 margin="auto"
+                key={uuidv4()}
               >
-                <Skeleton key={index} minH="130px" minW="270px" />
+                <Skeleton minH="130px" minW="270px" />
               </Flex>
             ))
           : transactions.map((transaction, index) => (
-              <MotionBox whileHover={{scale: 1.1}}>
-                <Transaction key={index} transaction={transaction} />
+              <MotionBox key={uuidv4()} whileHover={{scale: 1.1}}>
+                <Transaction transaction={transaction} />
               </MotionBox>
             ))}
       </SimpleGrid>
